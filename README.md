@@ -1,3 +1,3 @@
 # Learning: PowerShell
 
-Repo for any PS Scripts I make/find: Practice or Active
+Learning PowerShell. This is a repository of code or scripts I create when I am following guides, videos, or books. None of the code or scripts should be used in a production environment without approval and testing. 
