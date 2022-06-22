@@ -10,7 +10,7 @@
     }
 
     if(![System.IO.Directory]::Exists($ReportFilePath)){
-        #Report File Doesn't Exist
+        #Main Report File Doesn't Exist
         New-Item -Path "$MainReportFilePath" -Name "$ReportFileName" -ItemType Directory -Force
     }
     
