@@ -16,9 +16,9 @@ Learning PowerShell. This is a repository of code or scripts I create when I am 
 ---
 
 ### 🔭 Reconnaissance Tools
-| Tool | Version | Description | Link | Status |
-|:-----|:-------:|:-----------:|:-----|:------:|
-|      |         |             | []() |        |
+| Tool            | Version | Description | Link | Status |
+|:----------------|:-------:|:-----------:|:------------------------------------------------------------------------------------------------------------------------------|:--------:|
+| Invoke-PortScan | Ver 1.0 |             | [Invoke-PortScan.ps1](https://github.com/CyberThulhu22/PowerShell-Projects/tree/master/Information_Gathering/Invoke-PortScan) | Complete |
 |      |         |             | []() |        |
 |      |         |             | []() |        |
 ---
