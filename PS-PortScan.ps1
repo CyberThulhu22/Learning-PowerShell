@@ -53,7 +53,7 @@ Function Get-SubnetAddresses {
     # We can do a similar operation for the broadcast address
     # subnet mask bytes need to be inverted and reversed before adding
     $LowerBytes = [BitConverter]::GetBytes([UInt32] $lower.Address)
-    [IPAddress]$upper = (0..3 | %{$LowerBytes[$_] + ($maskbytes[(3-$_)] -bxor 255)}) -join '.'
+    [IPAddress]$upper = (0..3 | ForEach-Object {$LowerBytes[$_] + ($maskbytes[(3-$_)] -bxor 255)}) -join '.'
 
     # Make an object for use Elsewhere
     Return [pscustomobject][ordered]@{
@@ -108,7 +108,7 @@ Function Get-IPRange {
     return $IPList
 }
 
-Function port-scan-tcp {
+Function Invoke-TCPPortScan {
     <#
     .SYNOPSIS
             Working Function to Scan for TCP Ports
@@ -123,33 +123,33 @@ Function port-scan-tcp {
             Single/Array of Port(s)
 
     .EXAMPLE
-            port-scan-tcp -hosts [x.x.x.x] -ports [x]
+            Invoke-TCPPortScan -hosts [x.x.x.x] -ports [x]
 
     .LINK
-            https://raw.githubusercontent.com/InfosecMatter/Minimalistic-offensive-security-tools/master/port-scan-tcp.ps1
+            https://raw.githubusercontent.com/InfosecMatter/Minimalistic-offensive-security-tools/master/Invoke-TCPPortScan.ps1
     #>
     param($hosts,$ports)
     If (!$ports) {
-        Write-Host "usage: port-scan-tcp <host|hosts> <port|ports>"
-        Write-Host " e.g.: port-scan-tcp 192.168.1.2 445`n"
+        Write-Host "usage: Invoke-TCPPortScan <host|hosts> <port|ports>"
+        Write-Host " e.g.: Invoke-TCPPortScan 192.168.1.2 445`n"
         return
     }
     $out = ".\scanresults.txt"
     ForEach($p in [array]$ports) {
         ForEach($h in [array]$hosts) {
-            $x = (gc $out -EA SilentlyContinue | select-String "^$h,tcp,$p,")
+            $x = (Get-Content $out -ErrorAction SilentlyContinue | Select-String "^$h,tcp,$p,")
             If ($x) {
-                gc $out | select-String "^$h,tcp,$p,"
+                Get-Content $out | select-String "^$h,tcp,$p,"
                 continue
             }
             $msg = "$h,tcp,$p,"
-            $t = new-Object system.Net.Sockets.TcpClient
+            $t = New-Object System.Net.Sockets.TcpClient
             $c = $t.ConnectAsync($h,$p)
             for($i=0; $i -lt 10; $i++) {
                 If ($c.isCompleted) {
                     break
                 }
-                sleep -milliseconds 100
+                Start-Sleep -milliseconds 100
             }
             $t.Close();
             $r = "Filtered"
@@ -161,12 +161,12 @@ Function port-scan-tcp {
             }
             $msg += $r
             Write-Host "$msg"
-            echo $msg >>$out
+            Write-Output $msg >>$out
         }
     }
 }
 
-Function port-scan-udp {
+Function Invoke-UDPPortScan {
     <#
     .SYNOPSIS
             Working Function to Scan for UDP Ports
@@ -180,24 +180,24 @@ Function port-scan-udp {
             Single/Array of Port(s)
 
     .EXAMPLE
-            port-scan-udp -hosts [x.x.x.x] -ports [x]
+            Invoke-UDPPortScan -hosts [x.x.x.x] -ports [x]
 
     .LINK
-            https://raw.githubusercontent.com/InfosecMatter/Minimalistic-offensive-security-tools/master/port-scan-udp.ps1
+            https://raw.githubusercontent.com/InfosecMatter/Minimalistic-offensive-security-tools/master/Invoke-UDPPortScan.ps1
     #>
 
     param($hosts,$ports)
     If (!$ports) {
-        Write-Host "usage: port-scan-udp <host|hosts> <port|ports>"
-        Write-Host " e.g.: port-scan-udp 192.168.1.2 445`n"
+        Write-Host "usage: Invoke-UDPPortScan <host|hosts> <port|ports>"
+        Write-Host " e.g.: Invoke-UDPPortScan 192.168.1.2 445`n"
         return
     }
     $out = ".\scanresults.txt"
     ForEach($p in [array]$ports) {
     ForEach($h in [array]$hosts) {
-        $x = (gc $out -EA SilentlyContinue | select-String "^$h,udp,$p,")
+        $x = (Get-Content $out -ErrorAction SilentlyContinue | select-String "^$h,udp,$p,")
         If ($x) {
-            gc $out | select-String "^$h,udp,$p,"
+            Get-Content $out | select-String "^$h,udp,$p,"
             continue
         } # END If
     $msg = "$h,udp,$p,"
@@ -233,12 +233,12 @@ Function port-scan-udp {
         $u.Close()
         $msg += $r
         Write-Host "$msg"
-        echo $msg >>$out
+        Write-Output $msg >>$out
         } # END ForEach
     } # END ForEach
-} # END port-scan-udp
+} # END Invoke-UDPPortScan
 
-function Run-PortScan {
+function Invoke-PortScan {
     <#
     .SYNOPSIS
             Runs a Port Scan against IP Address(es) and Port(s)
@@ -345,7 +345,7 @@ function Run-PortScan {
         If($Network.Contains('/') -eq $true){
             $addr = [String]$Network.Split('/')[0]
             $mask = [Int]$Network.Split('/')[1]
-            ForEach ($ipaddr in (Get-SubnetAddresses -IP $addr -maskbits $mask | Get-IPRange | Select -ExpandProperty IPAddressToString)){
+            ForEach ($ipaddr in (Get-SubnetAddresses -IP $addr -maskbits $mask | Get-IPRange | Select-Object -ExpandProperty IPAddressToString)){
                 $MAIN_ADDRESS_ARRAY += [String]$ipaddr
             } # End ForEach
 
@@ -408,7 +408,7 @@ function Run-PortScan {
     If ($TCP.IsPresent) {
         ForEach($ip_addr in $MAIN_ADDRESS_ARRAY) {
             ForEach($port_num in $MAIN_PORT_ARRAY) {
-                port-scan-tcp -hosts $ip_addr -ports $port_num
+                Invoke-TCPPortScan -hosts $ip_addr -ports $port_num
             } # END ForEach
         } # END ForEach
     } # END If ($TCP.IsPresent())
@@ -416,7 +416,7 @@ function Run-PortScan {
     If ($UDP.IsPresent) {
         ForEach($ip_addr in $MAIN_ADDRESS_ARRAY) {
             ForEach($port_num in $MAIN_PORT_ARRAY) {
-                port-scan-udp -hosts $ip_addr -ports $port_num
+                Invoke-UDPPortScan -hosts $ip_addr -ports $port_num
             } # END ForEach
         } # END ForEach
     } # END If ($UDP.IsPresent())
