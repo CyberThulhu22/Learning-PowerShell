@@ -6,9 +6,9 @@
     do {
         $hostcomputername = hostname
         $userloggedin = $env:USERNAME
-        $RootDSE = "LDAP://RootDSE"
-        $DNSDomain = Get-ADRootDSE | Select-Object defaultNamingContext
-        $de = "LDAP://$DNSDomain"
+        #$RootDSE = "LDAP://RootDSE"
+        #$DNSDomain = Get-ADRootDSE | Select-Object defaultNamingContext
+        #$de = "LDAP://$DNSDomain"
         Clear-Host
         write-host "====="
         write-host "Currently on computer:"$hostcomputername
