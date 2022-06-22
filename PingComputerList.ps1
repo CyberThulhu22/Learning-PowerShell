@@ -5,7 +5,7 @@
     $ReportFilePath = "$env:USERPROFILE\Desktop\ADMIN_REPORTS\$ReportFileName"
 
     if(![System.IO.Directory]::Exists($MainReportFilePath)){
-        #Main Report File Doesn't Exist
+        #Main Report Directory Doesn't Exist
         New-Item -Path "$env:USERPROFILE\Desktop\" -Name "ADMIN_REPORTS" -ItemType Directory -Force
     }
 
@@ -16,15 +16,15 @@
     
 }
 
-function List-Ping{
+function Invoke-Ping{
 
     Report_File
-    Clear
+    Clear-Host
     $ReportFileName = Get-Date -Format "'Reports'(dd-MMM-yyyy)"
     $ListFileName = Read-Host "Type the name of the Computer List on your Desktop:"
     $ComputerList = Get-Content -Path "$env:USERPROFILE\Desktop\$ListFileName" -Force
     $PingListReport = Get-Date -Format "'PING REPORT_'ddMMMyyyy(hhmmtt).CSV"
-    Clear
+    Clear-Host
     Foreach($PC in $ComputerList){
         if(Test-Connection -ComputerName $PC -Count 1){
 
@@ -42,4 +42,4 @@ function List-Ping{
 
 }
 
-List-Ping
+Invoke-Ping
