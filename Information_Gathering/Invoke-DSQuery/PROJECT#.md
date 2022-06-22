@@ -1,5 +1,5 @@
-# **Project <POWERSHELL PROJECT>**
-## <POWERSHELL PROJECT>
+# **Project #**
+## The Scope!
 
 ### **Scenario:** 
 ##### Scenario Text
@@ -20,4 +20,4 @@
 ##### Expert Task Text
 
 ---
-COPYRIGHT © 2022 Jesse Leverett
+COPYRIGHT © 2021 Jesse Leverett

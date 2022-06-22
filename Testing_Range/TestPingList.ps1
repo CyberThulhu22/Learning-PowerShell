@@ -22,7 +22,7 @@
 }
 
 function Ping-ComputerList_Style2{
-    Get-Content "C:\Users\CyberThulhu22\Desktop\ComputerList.txt" | %{
+    Get-Content "C:\Users\CyberThulhu22\Desktop\ComputerList.txt" | ForEach-Object {
         If(Test-Connection $_ -Quiet -Count 1){
             Write-Host "$_ is UP" -b Green
         }

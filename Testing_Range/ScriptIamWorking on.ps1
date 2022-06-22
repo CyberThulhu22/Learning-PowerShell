@@ -31,7 +31,7 @@ function Save_Report{
 function Main{
 do {
 $Host_PcName = hostname
-Clear
+Clear-Host
 Write-Host "/////////////// Administrator Tools //////////////"
 Write-Host "=================================================="
 Write-Host "      Currently on Computer: $Host_PcName         "
@@ -60,7 +60,7 @@ switch ( $choice ){
     
     "1" {
         do{
-            Clear
+            Clear-Host
             Write-Host "=============================="
             Write-Host ">>>>>> PC PINGING TOOL <<<<<<<"
             Write-Host "=============================="
@@ -83,7 +83,7 @@ switch ( $choice ){
 
         switch( $choice ){
             '1'{
-                Clear
+                Clear-Host
                 $ComputerName = Read-Host "Input the name of the Computer"
                 Write-Host "--------------------"
                 Write-Host "Pinging $ComputerName"
@@ -93,7 +93,7 @@ switch ( $choice ){
             }
 
             '2'{
-                Clear
+                Clear-Host
                 Write-Host "Pinging Selection 2"
             }
 

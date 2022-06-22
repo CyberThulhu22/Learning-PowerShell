@@ -1,5 +1,5 @@
-# **Project <POWERSHELL PROJECT>**
-## <POWERSHELL PROJECT>
+# **Project PowerShell Port Scanner**
+## Invoke-PortScan
 
 ### **Scenario:** 
 ##### Scenario Text
