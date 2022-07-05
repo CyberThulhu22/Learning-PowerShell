@@ -69,3 +69,10 @@ Function Invoke-Template {
 
 
 }
+
+Function  {
+        param (
+                OptionalParameters
+        )
+        
+}
