@@ -34,45 +34,38 @@
 #>
 
 Function Invoke-Template {
-    [CmdletBinding(DefaultParameterSetName = "Template")]
-    Param (
-        # Parameter help description
-        [Parameter( Mandatory, 
-        ParameterSetName="First_Parameter", 
-        HelpMessage="Help Message",
-        Position=0 )]
-        [ValidateLength( 1, 10 )]
-        [Alias( "FP", "First" )]
-        [String[]]
-        $First_Parameter,
-
-        # Parameter help description
-        [Parameter( Mandatory, 
-        ParameterSetName="Second_Parameter_Set_One", 
-        HelpMessage="Help Message",
-        Position=0 )]
-        [ValidatePattern( "[0-9][0-9][0-9][0-9]" )]
-        [Alias( "SP", "Second" )]
-        [String[]]
-        $Second_Parameter,
-        
-        # Parameter help description
-        [Parameter( Mandatory, 
-        ParameterSetName="Second_Parameter_Set_One", 
-        HelpMessage="Help Message",
-        Position=0 )]
-        [ValidatePattern( "[0-9][0-9][0-9][0-9]" )]
-        [Alias( "TP", "Third" )]
-        [String[]]
-        $Third_Parameter
-    )
-
-
-}
-
-Function  {
-        param (
-                OptionalParameters
+        [CmdletBinding(DefaultParameterSetName = "Template")]
+        Param (
+            # Parameter help description
+            [Parameter( Mandatory, 
+            ParameterSetName="First_Parameter", 
+            HelpMessage="Help Message",
+            Position=0 )]
+            [ValidateLength( 1, 10 )]
+            [Alias( "FP", "First" )]
+            [String[]]
+            $First_Parameter,
+    
+            # Parameter help description
+            [Parameter( Mandatory, 
+            ParameterSetName="Second_Parameter_Set_One", 
+            HelpMessage="Help Message",
+            Position=0 )]
+            [ValidatePattern( "[0-9][0-9][0-9][0-9]" )]
+            [Alias( "SP", "Second" )]
+            [String[]]
+            $Second_Parameter,
+            
+            # Parameter help description
+            [Parameter( Mandatory, 
+            ParameterSetName="Second_Parameter_Set_One", 
+            HelpMessage="Help Message",
+            Position=0 )]
+            [ValidatePattern( "[0-9][0-9][0-9][0-9]" )]
+            [Alias( "TP", "Third" )]
+            [String[]]
+            $Third_Parameter
         )
-        
+    
+    
 }
